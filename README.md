@@ -4,6 +4,23 @@ The marketing website for a fictional yoga studio, built as a course exercise. T
 
 Later, this is meant to grow into a two-sided app (student + instructor), but this project covers the studio-facing website only.
 
+This project lives in its own repository (split out of a shared course-exercises monorepo) specifically so it can have its own GitHub Pages URL, independent of any other project.
+
+## Live site
+
+Deployed automatically to GitHub Pages on every push to `main`: **https://\<your-username\>.github.io/\<this-repo-name\>/**
+
+## Deployment
+
+`.github/workflows/deploy.yml` runs the test suite and typecheck, builds the app with `--base=/<repo-name>/` (so asset URLs resolve under the GitHub Pages project subpath), and publishes `dist/` via the official `actions/deploy-pages` action. Nothing needs to be built or committed by hand — just push to `main`.
+
+**One-time setup after creating/forking this repo:** in GitHub, go to **Settings → Pages** and set **Source** to **GitHub Actions**. After that, every push deploys automatically.
+
+Two details make a React Router SPA work correctly on GitHub Pages, since it's a static host with no server-side rewrites:
+
+- **`src/main.tsx`** derives the router's `basename` from `import.meta.env.BASE_URL` at runtime, so it automatically matches whatever `--base` the site was built with — no repo name hardcoded in application code.
+- **`public/404.html`** implements the standard [SPA-on-GitHub-Pages redirect trick](https://github.com/rafgraph/spa-github-pages): a deep link or page refresh on any route other than `/` hits this 404 page, which encodes the intended path into a query string and redirects to the app root; a small script in `index.html` decodes it back via `history.replaceState` before React Router reads the URL. This keeps clean URLs (e.g. `/schedule`, not `/#/schedule`) while still surviving a hard refresh.
+
 ## Stack
 
 - **React 18 + TypeScript + Vite** — app shell and build tooling.

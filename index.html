@@ -14,6 +14,24 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Jost:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages: https://github.com/rafgraph/spa-github-pages
+      // Restores the real path (encoded by public/404.html) into browser
+      // history before React Router reads the URL, so deep links and page
+      // refreshes on GitHub Pages work with clean paths.
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(null, "", l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
   </head>
   <body>
     <div id="root"></div>
