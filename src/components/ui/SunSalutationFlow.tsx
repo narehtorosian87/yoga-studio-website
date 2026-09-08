@@ -1,8 +1,10 @@
 import { sunSalutationPoses } from "../../data/poses";
 
 const CYCLE_SECONDS = 20;
-const TORSO_WIDTH = 30;
-const LIMB_WIDTH = 21;
+const TOP_WIDTH = 27;
+const BOTTOM_WIDTH = 30;
+const ARM_WIDTH = 18;
+const LEG_WIDTH = 22;
 
 export function SunSalutationFlow() {
   const stepSeconds = CYCLE_SECONDS / sunSalutationPoses.length;
@@ -26,26 +28,61 @@ export function SunSalutationFlow() {
               <svg
                 viewBox="0 0 200 230"
                 fill="none"
-                stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="h-full w-full"
               >
-                {/* A soft, faceless silhouette: an oval head plus a thicker
-                    torso stroke and thinner limb strokes, all one solid
-                    color so they read as a single rounded human shape
-                    rather than a thin stick figure. */}
-                <path d={pose.illustration.torso} strokeWidth={TORSO_WIDTH} />
-                {pose.illustration.limbs.map((d) => (
-                  <path key={d} d={d} strokeWidth={LIMB_WIDTH} />
-                ))}
+                {/* A simple illustrated figure, faceless but recognizably
+                    human: legging-colored legs and lower torso, a
+                    top-colored chest/back, skin-toned bare arms and head,
+                    and a small dark hair shape — instead of one flat
+                    silhouette color.
+
+                    Draw order: legs, then the torso block, then arms and
+                    head on top — arms are usually the visually important,
+                    distinctly-posed limb (reaching, supporting weight
+                    overhead), so each pose's arm coordinates are chosen to
+                    clear the torso's width rather than hiding under it. */}
+                <g className="text-primary-800" stroke="currentColor">
+                  {pose.illustration.legs.map((d) => (
+                    <path key={d} d={d} strokeWidth={LEG_WIDTH} />
+                  ))}
+                </g>
+
+                <path
+                  d={pose.illustration.torsoBottom}
+                  strokeWidth={BOTTOM_WIDTH}
+                  stroke="currentColor"
+                  className="text-primary-800"
+                />
+                <path
+                  d={pose.illustration.torsoTop}
+                  strokeWidth={TOP_WIDTH}
+                  stroke="currentColor"
+                  className="text-primary-600"
+                />
+
+                <g className="text-secondary-300" stroke="currentColor">
+                  {pose.illustration.arms.map((d) => (
+                    <path key={d} d={d} strokeWidth={ARM_WIDTH} />
+                  ))}
+                </g>
+
                 <ellipse
                   cx={pose.illustration.head.cx}
                   cy={pose.illustration.head.cy}
                   rx={pose.illustration.head.rx}
                   ry={pose.illustration.head.ry}
                   fill="currentColor"
-                  stroke="none"
+                  className="text-secondary-300"
+                />
+
+                <circle
+                  cx={pose.illustration.head.cx}
+                  cy={pose.illustration.head.cy - pose.illustration.head.ry * 0.55}
+                  r={pose.illustration.head.rx * 0.55}
+                  fill="currentColor"
+                  className="text-sand-800"
                 />
               </svg>
             </div>

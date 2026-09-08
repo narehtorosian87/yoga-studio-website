@@ -2,10 +2,10 @@ import type { Pose } from "./types";
 
 /**
  * The eight poses of the home page sun salutation animation, in sequence.
- * Each is drawn as a soft, faceless human silhouette (an oval head plus a
- * thick-stroked torso and limbs, all the same solid color) rather than a
- * thin stick figure, in a shared 200x230 viewBox so every pose lines up on
- * the same "stage".
+ * Each is drawn as a simple illustrated figure — skin-toned head and arms,
+ * a two-tone top/legging outfit, and a small dark hair shape — rather than
+ * a single-color silhouette, in a shared 200x230 viewBox so every pose
+ * lines up on the same "stage".
  */
 export const sunSalutationPoses: Pose[] = [
   {
@@ -14,8 +14,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Mountain Pose",
     illustration: {
       head: { cx: 100, cy: 30, rx: 17, ry: 19 },
-      torso: "M100,48 L100,145",
-      limbs: ["M96,56 L82,130", "M104,56 L118,130", "M100,145 L84,214", "M100,145 L116,214"],
+      torsoTop: "M100,48 L100,104",
+      torsoBottom: "M100,104 L100,145",
+      arms: ["M82,58 L82,130", "M118,58 L118,130"],
+      legs: ["M100,145 L84,214", "M100,145 L116,214"],
     },
   },
   {
@@ -24,8 +26,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Upward Salute",
     illustration: {
       head: { cx: 104, cy: 27, rx: 17, ry: 19 },
-      torso: "M100,46 Q110,96 105,145",
-      limbs: ["M99,54 L68,12", "M103,54 L134,14", "M105,145 L90,214", "M105,145 L120,214"],
+      torsoTop: "M100,46 Q106,73 106,97",
+      torsoBottom: "M106,97 Q107,122 105,145",
+      arms: ["M99,54 L68,12", "M103,54 L134,14"],
+      legs: ["M105,145 L90,214", "M105,145 L120,214"],
     },
   },
   {
@@ -34,8 +38,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Standing Forward Fold",
     illustration: {
       head: { cx: 90, cy: 200, rx: 17, ry: 19 },
-      torso: "M100,145 Q98,174 92,196",
-      limbs: ["M100,145 L84,214", "M100,145 L116,214", "M100,150 L90,198", "M100,150 L104,200"],
+      torsoTop: "M99,152 Q98,174 92,196",
+      torsoBottom: "M100,145 L99,152",
+      arms: ["M100,150 L82,202"],
+      legs: ["M100,145 L84,214", "M100,145 L116,214"],
     },
   },
   {
@@ -44,8 +50,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Halfway Lift",
     illustration: {
       head: { cx: 158, cy: 100, rx: 17, ry: 19 },
-      torso: "M100,145 L152,108",
-      limbs: ["M100,145 L84,214", "M100,145 L116,214", "M148,112 L122,144"],
+      torsoTop: "M122,130 L152,108",
+      torsoBottom: "M100,145 L122,130",
+      arms: ["M148,112 L122,144"],
+      legs: ["M100,145 L84,214", "M100,145 L116,214"],
     },
   },
   {
@@ -54,8 +62,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Plank Pose",
     illustration: {
       head: { cx: 44, cy: 145, rx: 18, ry: 16 },
-      torso: "M60,150 L165,152",
-      limbs: ["M62,150 L62,196", "M163,152 L188,192"],
+      torsoTop: "M60,150 L110,151",
+      torsoBottom: "M110,151 L165,152",
+      arms: ["M62,150 L62,196"],
+      legs: ["M163,152 L188,192"],
     },
   },
   {
@@ -64,8 +74,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Cobra Pose",
     illustration: {
       head: { cx: 76, cy: 127, rx: 18, ry: 19 },
-      torso: "M84,150 Q128,112 150,182",
-      limbs: ["M68,196 L84,150", "M150,182 L188,192"],
+      torsoTop: "M84,150 Q106,120 123,139",
+      torsoBottom: "M123,139 Q138,155 150,182",
+      arms: ["M68,196 L84,150"],
+      legs: ["M150,182 L188,192"],
     },
   },
   {
@@ -73,9 +85,11 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Adho Mukha Svanasana",
     english: "Downward-Facing Dog",
     illustration: {
-      head: { cx: 67, cy: 168, rx: 17, ry: 18 },
-      torso: "M86,148 L128,106",
-      limbs: ["M52,198 L86,148", "M128,106 L168,198"],
+      head: { cx: 60, cy: 186, rx: 17, ry: 18 },
+      torsoTop: "M86,148 L107,127",
+      torsoBottom: "M107,127 L128,106",
+      arms: ["M50,200 L86,148"],
+      legs: ["M128,106 L168,198"],
     },
   },
   {
@@ -84,8 +98,10 @@ export const sunSalutationPoses: Pose[] = [
     english: "Forward Fold",
     illustration: {
       head: { cx: 90, cy: 200, rx: 17, ry: 19 },
-      torso: "M100,145 Q98,174 92,196",
-      limbs: ["M100,145 L84,214", "M100,145 L116,214", "M100,150 L90,198", "M100,150 L104,200"],
+      torsoTop: "M99,152 Q98,174 92,196",
+      torsoBottom: "M100,145 L99,152",
+      arms: ["M100,150 L82,202"],
+      legs: ["M100,145 L84,214", "M100,145 L116,214"],
     },
   },
 ];

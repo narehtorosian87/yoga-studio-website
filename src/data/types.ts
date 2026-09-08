@@ -28,10 +28,14 @@ export interface YogaStyle {
 export interface PoseIllustrationData {
   /** An oval head silhouette — deliberately faceless, just a soft shape. */
   head: { cx: number; cy: number; rx: number; ry: number };
-  /** Single path for the torso/spine, stroked wider than the limbs. */
-  torso: string;
-  /** Arm and leg paths, stroked thinner than the torso. */
-  limbs: string[];
+  /** Chest/back segment of the torso, colored as the top. */
+  torsoTop: string;
+  /** Waist/hip segment of the torso, colored the same as the legs. */
+  torsoBottom: string;
+  /** Bare-skin-colored arm paths. */
+  arms: string[];
+  /** Legging-colored leg paths. */
+  legs: string[];
 }
 
 export interface Pose {
