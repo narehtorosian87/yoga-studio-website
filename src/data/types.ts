@@ -26,8 +26,12 @@ export interface YogaStyle {
 }
 
 export interface PoseIllustrationData {
-  head: { cx: number; cy: number; r: number };
-  paths: string[];
+  /** An oval head silhouette — deliberately faceless, just a soft shape. */
+  head: { cx: number; cy: number; rx: number; ry: number };
+  /** Single path for the torso/spine, stroked wider than the limbs. */
+  torso: string;
+  /** Arm and leg paths, stroked thinner than the torso. */
+  limbs: string[];
 }
 
 export interface Pose {

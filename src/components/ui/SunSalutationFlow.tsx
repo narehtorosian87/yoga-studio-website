@@ -1,6 +1,8 @@
 import { sunSalutationPoses } from "../../data/poses";
 
-const CYCLE_SECONDS = 16;
+const CYCLE_SECONDS = 20;
+const TORSO_WIDTH = 30;
+const LIMB_WIDTH = 21;
 
 export function SunSalutationFlow() {
   const stepSeconds = CYCLE_SECONDS / sunSalutationPoses.length;
@@ -17,26 +19,36 @@ export function SunSalutationFlow() {
             className="pose-layer absolute inset-0 text-primary-700"
             style={{ animationDelay: delay }}
           >
-            <svg
-              viewBox="0 0 200 220"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-full w-full"
-            >
-              <circle
-                cx={pose.illustration.head.cx}
-                cy={pose.illustration.head.cy}
-                r={pose.illustration.head.r}
-                fill="currentColor"
-                stroke="none"
-              />
-              {pose.illustration.paths.map((d) => (
-                <path key={d} d={d} />
-              ))}
-            </svg>
+            {/* Wrapped separately so the continuous idle sway (global.css)
+                composes with this layer's own fade/scale-in transform
+                instead of one animation overwriting the other. */}
+            <div className="pose-figure h-full w-full">
+              <svg
+                viewBox="0 0 200 230"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-full w-full"
+              >
+                {/* A soft, faceless silhouette: an oval head plus a thicker
+                    torso stroke and thinner limb strokes, all one solid
+                    color so they read as a single rounded human shape
+                    rather than a thin stick figure. */}
+                <path d={pose.illustration.torso} strokeWidth={TORSO_WIDTH} />
+                {pose.illustration.limbs.map((d) => (
+                  <path key={d} d={d} strokeWidth={LIMB_WIDTH} />
+                ))}
+                <ellipse
+                  cx={pose.illustration.head.cx}
+                  cy={pose.illustration.head.cy}
+                  rx={pose.illustration.head.rx}
+                  ry={pose.illustration.head.ry}
+                  fill="currentColor"
+                  stroke="none"
+                />
+              </svg>
+            </div>
           </div>
         );
       })}

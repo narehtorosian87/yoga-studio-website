@@ -20,8 +20,15 @@
 }
 
 /* Sun salutation flow animation: a pure CSS crossfade loop through eight
-   poses. Kept as plain CSS because the timing math (8 poses over a 16s
-   loop) reads far more clearly as keyframes than as utility classes. */
+   poses. Kept as plain CSS because the timing math (8 poses over a 20s
+   loop) reads far more clearly as keyframes than as utility classes.
+
+   Each pose eases in with a gentle grow-and-settle rather than snapping
+   to full opacity, and a continuous, independent sway on the figure
+   itself (composed via a separate wrapper element, since two animations
+   on one element can't both drive "transform") keeps the silhouette
+   softly moving even while a pose is held, so the loop reads as one
+   unbroken flow rather than a slideshow. */
 
 @keyframes breathe {
   0%,
@@ -36,20 +43,39 @@
 }
 
 @keyframes pose-fade {
+  /* With 8 poses over a 20s cycle, each layer is staggered by 2.5s
+     (12.5%). This layer's fade-out (12.5% -> 17%) is timed to exactly
+     span the same window as the next layer's fade-in (0% -> 4.5% of
+     its own, delay-shifted, cycle) so the two dissolve into each other
+     instead of both briefly hitting zero opacity between poses. */
   0% {
     opacity: 0;
+    transform: scale(0.95) translateY(8px);
   }
-  3% {
+  4.5% {
     opacity: 1;
+    transform: scale(1) translateY(0);
   }
-  10% {
+  12.5% {
     opacity: 1;
+    transform: scale(1) translateY(0);
   }
-  14% {
+  17% {
     opacity: 0;
+    transform: scale(1.04) translateY(-8px);
   }
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes figure-sway {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.015);
   }
 }
 
@@ -65,13 +91,19 @@
      delay kicks in, and every pose overlaps for the first ~14s of
      every page load. */
   opacity: 0;
-  animation: pose-fade 16s infinite;
+  animation: pose-fade 20s ease-in-out infinite;
+}
+
+.pose-figure {
+  transform-origin: 50% 92%;
+  animation: figure-sway 6s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .breath-ring,
   .pose-layer,
-  .pose-name {
+  .pose-name,
+  .pose-figure {
     animation: none;
   }
   .pose-layer:first-of-type,

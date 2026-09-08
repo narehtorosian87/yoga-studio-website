@@ -2,8 +2,10 @@ import type { Pose } from "./types";
 
 /**
  * The eight poses of the home page sun salutation animation, in sequence.
- * Each illustration is a minimal line figure drawn in a shared 200x220
- * viewBox so every pose lines up on the same "stage".
+ * Each is drawn as a soft, faceless human silhouette (an oval head plus a
+ * thick-stroked torso and limbs, all the same solid color) rather than a
+ * thin stick figure, in a shared 200x230 viewBox so every pose lines up on
+ * the same "stage".
  */
 export const sunSalutationPoses: Pose[] = [
   {
@@ -11,8 +13,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Tadasana",
     english: "Mountain Pose",
     illustration: {
-      head: { cx: 100, cy: 34, r: 14 },
-      paths: ["M100,48 L100,140", "M100,60 L82,130", "M100,60 L118,130", "M100,140 L88,205", "M100,140 L112,205"],
+      head: { cx: 100, cy: 30, rx: 17, ry: 19 },
+      torso: "M100,48 L100,145",
+      limbs: ["M96,56 L82,130", "M104,56 L118,130", "M100,145 L84,214", "M100,145 L116,214"],
     },
   },
   {
@@ -20,8 +23,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Urdhva Hastasana",
     english: "Upward Salute",
     illustration: {
-      head: { cx: 103, cy: 32, r: 14 },
-      paths: ["M100,46 Q108,90 104,140", "M101,55 L70,15", "M101,55 L132,17", "M104,140 L92,205", "M104,140 L116,205"],
+      head: { cx: 104, cy: 27, rx: 17, ry: 19 },
+      torso: "M100,46 Q110,96 105,145",
+      limbs: ["M99,54 L68,12", "M103,54 L134,14", "M105,145 L90,214", "M105,145 L120,214"],
     },
   },
   {
@@ -29,8 +33,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Uttanasana",
     english: "Standing Forward Fold",
     illustration: {
-      head: { cx: 91, cy: 205, r: 13 },
-      paths: ["M100,140 L88,205", "M100,140 L112,205", "M100,140 Q100,172 94,196", "M100,150 L92,206", "M100,150 L108,206"],
+      head: { cx: 90, cy: 200, rx: 17, ry: 19 },
+      torso: "M100,145 Q98,174 92,196",
+      limbs: ["M100,145 L84,214", "M100,145 L116,214", "M100,150 L90,198", "M100,150 L104,200"],
     },
   },
   {
@@ -38,8 +43,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Ardha Uttanasana",
     english: "Halfway Lift",
     illustration: {
-      head: { cx: 151, cy: 99, r: 13 },
-      paths: ["M100,140 L88,205", "M100,140 L112,205", "M100,140 L146,108", "M140,113 L120,140"],
+      head: { cx: 158, cy: 100, rx: 17, ry: 19 },
+      torso: "M100,145 L152,108",
+      limbs: ["M100,145 L84,214", "M100,145 L116,214", "M148,112 L122,144"],
     },
   },
   {
@@ -47,8 +53,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Phalakasana",
     english: "Plank Pose",
     illustration: {
-      head: { cx: 48, cy: 142, r: 13 },
-      paths: ["M63,148 L168,150", "M63,148 L63,192", "M168,150 L182,188"],
+      head: { cx: 44, cy: 145, rx: 18, ry: 16 },
+      torso: "M60,150 L165,152",
+      limbs: ["M62,150 L62,196", "M163,152 L188,192"],
     },
   },
   {
@@ -56,8 +63,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Bhujangasana",
     english: "Cobra Pose",
     illustration: {
-      head: { cx: 78, cy: 132, r: 13 },
-      paths: ["M70,192 L85,150", "M85,150 Q130,118 150,180", "M150,180 L185,190"],
+      head: { cx: 76, cy: 127, rx: 18, ry: 19 },
+      torso: "M84,150 Q128,112 150,182",
+      limbs: ["M68,196 L84,150", "M150,182 L188,192"],
     },
   },
   {
@@ -65,8 +73,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Adho Mukha Svanasana",
     english: "Downward-Facing Dog",
     illustration: {
-      head: { cx: 70, cy: 165, r: 13 },
-      paths: ["M55,195 L85,150", "M85,150 L125,110", "M125,110 L165,195"],
+      head: { cx: 67, cy: 168, rx: 17, ry: 18 },
+      torso: "M86,148 L128,106",
+      limbs: ["M52,198 L86,148", "M128,106 L168,198"],
     },
   },
   {
@@ -74,8 +83,9 @@ export const sunSalutationPoses: Pose[] = [
     sanskrit: "Uttanasana",
     english: "Forward Fold",
     illustration: {
-      head: { cx: 91, cy: 205, r: 13 },
-      paths: ["M100,140 L88,205", "M100,140 L112,205", "M100,140 Q100,172 94,196", "M100,150 L92,206", "M100,150 L108,206"],
+      head: { cx: 90, cy: 200, rx: 17, ry: 19 },
+      torso: "M100,145 Q98,174 92,196",
+      limbs: ["M100,145 L84,214", "M100,145 L116,214", "M100,150 L90,198", "M100,150 L104,200"],
     },
   },
 ];
