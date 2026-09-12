@@ -3,10 +3,9 @@ import { Link, NavLink } from "react-router-dom";
 
 const NAV_ITEMS = [
   { label: "Home", to: "/" },
-  { label: "Schedule", to: "/schedule" },
+  { label: "Classes", to: "/classes" },
   { label: "Pricing", to: "/pricing" },
   { label: "Styles of Yoga", to: "/styles-of-yoga" },
-  { label: "Private Sessions", to: "/private-sessions" },
 ];
 
 function navLinkClass(isActive: boolean, extra = "") {

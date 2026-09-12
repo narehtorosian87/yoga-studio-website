@@ -1,9 +1,11 @@
 import { Button } from "../components/ui/Button";
 import { Container } from "../components/ui/Container";
+import { EventCard } from "../components/ui/EventCard";
 import { MantraBand } from "../components/ui/MantraBand";
+import { MeditationSilhouette } from "../components/ui/MeditationSilhouette";
 import { Section } from "../components/ui/Section";
 import { SectionHeading } from "../components/ui/SectionHeading";
-import { SunSalutationFlow } from "../components/ui/SunSalutationFlow";
+import { studioEvents } from "../data/events";
 import { homeMantra, instructors } from "../data/studio";
 
 const PATHS_IN = [
@@ -12,7 +14,7 @@ const PATHS_IN = [
     description:
       "A steady weekly rhythm across Vinyasa, Hatha, Yin, and Restorative, taught by the same few instructors so the room starts to feel familiar.",
     linkLabel: "See the schedule",
-    to: "/schedule",
+    to: "/classes",
     icon: (
       <path d="M4 20c8-1 14-7 15-15-8 1-14 7-15 15Zm2-2c2-4 5-7 9-9" />
     ),
@@ -22,7 +24,7 @@ const PATHS_IN = [
     description:
       "One-to-one time built around you, whether that's working around an injury, preparing for something specific, or just wanting more attention.",
     linkLabel: "Apply for a private session",
-    to: "/private-sessions",
+    to: "/classes#private-sessions",
     icon: <><circle cx="12" cy="8" r="3.4" /><path d="M5 20c1.2-4.2 4-6.4 7-6.4S18.8 15.8 20 20" /></>,
   },
   {
@@ -51,14 +53,16 @@ export function HomePage() {
               to actually hear yourself think.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button to="/schedule">View the schedule</Button>
+              <Button to="/classes">View the schedule</Button>
               <Button to="/pricing" variant="outline">
                 See pricing
               </Button>
             </div>
           </div>
 
-          <SunSalutationFlow />
+          <div className="mx-auto w-full max-w-sm">
+            <MeditationSilhouette />
+          </div>
         </Container>
       </Section>
 
@@ -87,6 +91,21 @@ export function HomePage() {
                   {path.linkLabel} <span aria-hidden="true">→</span>
                 </Button>
               </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SectionHeading
+            eyebrow="Beyond the weekly schedule"
+            title="Upcoming events"
+            description="Retreats and workshops for going a little deeper, a few times a year."
+          />
+          <div className="grid gap-6 sm:grid-cols-2">
+            {studioEvents.map((event) => (
+              <EventCard key={event.slug} event={event} />
             ))}
           </div>
         </Container>

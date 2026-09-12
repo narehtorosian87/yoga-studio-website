@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
+import { ClassesPage } from "./pages/ClassesPage";
+import { EventDetailPage } from "./pages/EventDetailPage";
 import { HomePage } from "./pages/HomePage";
 import { PricingPage } from "./pages/PricingPage";
-import { PrivateSessionsPage } from "./pages/PrivateSessionsPage";
-import { SchedulePage } from "./pages/SchedulePage";
 import { StylesOfYogaPage } from "./pages/StylesOfYogaPage";
 
 export default function App() {
@@ -11,10 +11,10 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="schedule" element={<SchedulePage />} />
+        <Route path="classes" element={<ClassesPage />} />
         <Route path="pricing" element={<PricingPage />} />
         <Route path="styles-of-yoga" element={<StylesOfYogaPage />} />
-        <Route path="private-sessions" element={<PrivateSessionsPage />} />
+        <Route path="events/:slug" element={<EventDetailPage />} />
       </Route>
     </Routes>
   );

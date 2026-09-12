@@ -15,10 +15,9 @@ describe("Header", () => {
   it("links to every page of the site", () => {
     renderHeader();
     expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
-    expect(screen.getByRole("link", { name: "Schedule" })).toHaveAttribute("href", "/schedule");
+    expect(screen.getByRole("link", { name: "Classes" })).toHaveAttribute("href", "/classes");
     expect(screen.getByRole("link", { name: "Pricing" })).toHaveAttribute("href", "/pricing");
     expect(screen.getByRole("link", { name: "Styles of Yoga" })).toHaveAttribute("href", "/styles-of-yoga");
-    expect(screen.getByRole("link", { name: "Private Sessions" })).toHaveAttribute("href", "/private-sessions");
   });
 
   it("marks the link for the current page as active", () => {
@@ -50,8 +49,8 @@ describe("Header", () => {
     await user.click(screen.getByRole("button", { name: /menu/i }));
 
     const mobileNav = screen.getByTestId("mobile-nav");
-    const scheduleLinks = screen.getAllByRole("link", { name: "Schedule" });
-    await user.click(scheduleLinks[scheduleLinks.length - 1]);
+    const classesLinks = screen.getAllByRole("link", { name: "Classes" });
+    await user.click(classesLinks[classesLinks.length - 1]);
 
     expect(mobileNav).toHaveClass("hidden");
   });

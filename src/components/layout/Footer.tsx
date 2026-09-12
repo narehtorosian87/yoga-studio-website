@@ -14,8 +14,8 @@ export function Footer() {
             <h4 className="mb-3 font-heading text-sand-50">Explore</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/schedule" className="hover:text-sand-50">
-                  Class Schedule
+                <Link to="/classes" className="hover:text-sand-50">
+                  Classes
                 </Link>
               </li>
               <li>
@@ -29,7 +29,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/private-sessions" className="hover:text-sand-50">
+                <Link to="/classes#private-sessions" className="hover:text-sand-50">
                   Private Sessions
                 </Link>
               </li>

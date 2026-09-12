@@ -40,6 +40,13 @@ jobs:
       # Project (non-custom-domain) GitHub Pages sites are served from
       # /<repo-name>/, so the build needs that path baked into asset URLs.
       - run: npm run build -- --base=/${{ github.event.repository.name }}/
+        env:
+          # Optional. Set a repository variable/secret with this name to
+          # have the group class form record registrations to a Google
+          # Sheet — see docs/google-apps-script.gs and README.md. Left
+          # unset, the build just omits it and the form behaves as a
+          # local-only demo, same as before.
+          VITE_GROUP_REGISTRATION_ENDPOINT: ${{ secrets.VITE_GROUP_REGISTRATION_ENDPOINT }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

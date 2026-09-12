@@ -54,4 +54,52 @@ describe("GroupClassSignupForm", () => {
     await user.click(screen.getByRole("button", { name: "Reserve my spot" }));
     expect(screen.queryByRole("status")).not.toBeInTheDocument();
   });
+
+  it("does not attempt to record anything when no sheet endpoint is configured", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response());
+    const user = userEvent.setup();
+    render(<GroupClassSignupForm />);
+    await fillRequiredFields()(user);
+    await user.click(screen.getByRole("button", { name: "Reserve my spot" }));
+
+    expect(fetchSpy).not.toHaveBeenCalled();
+    fetchSpy.mockRestore();
+  });
+});
+
+describe("GroupClassSignupForm, with a sheet endpoint configured", () => {
+  beforeEach(() => {
+    vi.resetModules();
+    vi.doMock("../../config", () => ({ GROUP_REGISTRATION_ENDPOINT: "https://script.google.com/macros/s/fake/exec" }));
+  });
+
+  afterEach(() => {
+    vi.doUnmock("../../config");
+  });
+
+  it("posts the registration, including which class was chosen, to the configured endpoint", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response());
+    const { GroupClassSignupForm: MockedForm } = await import("./GroupClassSignupForm");
+
+    const user = userEvent.setup();
+    render(<MockedForm />);
+    await fillRequiredFields("Priya Shah", "priya@example.com")(user);
+    await user.type(screen.getByLabelText("Anything we should know (optional)"), "First time");
+    await user.click(screen.getByRole("button", { name: "Reserve my spot" }));
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchSpy.mock.calls[0];
+    expect(url).toBe("https://script.google.com/macros/s/fake/exec");
+    expect(init).toMatchObject({ method: "POST", mode: "no-cors" });
+
+    const body = JSON.parse(init?.body as string);
+    expect(body).toMatchObject({
+      name: "Priya Shah",
+      email: "priya@example.com",
+      className: formatSessionLabel(classSchedule[0]),
+      notes: "First time",
+    });
+
+    fetchSpy.mockRestore();
+  });
 });

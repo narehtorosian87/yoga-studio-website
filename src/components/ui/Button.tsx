@@ -44,7 +44,7 @@ export function Button(props: ButtonProps) {
   const classes = [baseClasses, variantClasses[variant], className].filter(Boolean).join(" ");
 
   if ("to" in props && props.to) {
-    const { to, ...rest } = props as ButtonAsRouterLink;
+    const { to, className: _className, variant: _variant, ...rest } = props as ButtonAsRouterLink;
     return (
       <Link to={to} className={classes} {...rest}>
         {children}
@@ -53,7 +53,7 @@ export function Button(props: ButtonProps) {
   }
 
   if ("href" in props && props.href) {
-    const { href, ...rest } = props as ButtonAsAnchor;
+    const { href, className: _className, variant: _variant, ...rest } = props as ButtonAsAnchor;
     return (
       <a href={href} className={classes} {...rest}>
         {children}
@@ -61,7 +61,7 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const { type = "button", ...rest } = props as ButtonAsButton;
+  const { type = "button", className: _className, variant: _variant, ...rest } = props as ButtonAsButton;
   return (
     <button type={type} className={classes} {...rest}>
       {children}

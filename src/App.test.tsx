@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 import { classSchedule } from "./data/schedule";
+import { studioEvents } from "./data/events";
 
 function renderApp(initialEntry = "/") {
   return render(
@@ -18,8 +19,8 @@ describe("App routing", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Find your ground." })).toBeInTheDocument();
   });
 
-  it("renders the schedule page at /schedule", () => {
-    renderApp("/schedule");
+  it("renders the classes page at /classes", () => {
+    renderApp("/classes");
     expect(screen.getByRole("heading", { level: 1, name: "This week at the studio" })).toBeInTheDocument();
   });
 
@@ -33,9 +34,20 @@ describe("App routing", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Which class is actually for you" })).toBeInTheDocument();
   });
 
-  it("renders the private sessions page at /private-sessions", () => {
-    renderApp("/private-sessions");
-    expect(screen.getByRole("heading", { level: 1, name: "One-to-one, built around you" })).toBeInTheDocument();
+  it("includes a Private Sessions section on the classes page", () => {
+    renderApp("/classes");
+    expect(screen.getByRole("heading", { level: 2, name: "Private Sessions" })).toBeInTheDocument();
+  });
+
+  it("renders an event detail page at /events/:slug", () => {
+    const event = studioEvents[0];
+    renderApp(`/events/${event.slug}`);
+    expect(screen.getByRole("heading", { level: 1, name: event.title })).toBeInTheDocument();
+  });
+
+  it("sends an unknown event slug back to the home page", () => {
+    renderApp("/events/does-not-exist");
+    expect(screen.getByRole("heading", { level: 1, name: "Find your ground." })).toBeInTheDocument();
   });
 });
 
@@ -47,10 +59,11 @@ describe("Cross-page user flows", () => {
     await user.click(screen.getByRole("link", { name: "View the schedule" }));
     expect(screen.getByRole("heading", { level: 1, name: "This week at the studio" })).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText("Full name"), "Jordan Reyes");
-    await user.type(screen.getByLabelText("Email"), "jordan@example.com");
-    await user.selectOptions(screen.getByLabelText("Choose a class"), classSchedule[0].id);
-    await user.click(screen.getByRole("button", { name: "Reserve my spot" }));
+    const groupForm = screen.getByRole("button", { name: "Reserve my spot" }).closest("form") as HTMLElement;
+    await user.type(within(groupForm).getByLabelText("Full name"), "Jordan Reyes");
+    await user.type(within(groupForm).getByLabelText("Email"), "jordan@example.com");
+    await user.selectOptions(within(groupForm).getByLabelText("Choose a class"), classSchedule[0].id);
+    await user.click(within(groupForm).getByRole("button", { name: "Reserve my spot" }));
 
     expect(screen.getByRole("status")).toHaveTextContent(/spot is reserved/i);
   });
@@ -60,13 +73,15 @@ describe("Cross-page user flows", () => {
     renderApp("/");
 
     await user.click(screen.getByRole("link", { name: /apply for a private session/i }));
-    expect(screen.getByRole("heading", { level: 1, name: "One-to-one, built around you" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "This week at the studio" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Private Sessions" })).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText("Full name"), "Jordan Reyes");
-    await user.type(screen.getByLabelText("Email"), "jordan@example.com");
-    await user.selectOptions(screen.getByLabelText("Experience level"), "Some experience");
-    await user.type(screen.getByLabelText("What are you hoping to work on?"), "More flexibility");
-    await user.click(screen.getByRole("button", { name: "Send application" }));
+    const privateForm = screen.getByRole("button", { name: "Send application" }).closest("form") as HTMLElement;
+    await user.type(within(privateForm).getByLabelText("Full name"), "Jordan Reyes");
+    await user.type(within(privateForm).getByLabelText("Email"), "jordan@example.com");
+    await user.selectOptions(within(privateForm).getByLabelText("Experience level"), "Some experience");
+    await user.type(within(privateForm).getByLabelText("What are you hoping to work on?"), "More flexibility");
+    await user.click(within(privateForm).getByRole("button", { name: "Send application" }));
 
     expect(screen.getByRole("status")).toHaveTextContent(/received your application/i);
   });

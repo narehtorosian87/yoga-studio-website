@@ -40,7 +40,7 @@ export function StylesOfYogaPage() {
             Hatha and Gentle Hatha classes are the easiest place to begin. From there, most students settle into
             Vinyasa, Yin, or a mix of both.
           </p>
-          <Button to="/schedule" className="mt-6">
+          <Button to="/classes" className="mt-6">
             View the schedule
           </Button>
         </Container>

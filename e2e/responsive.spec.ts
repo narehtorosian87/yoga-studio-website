@@ -2,10 +2,10 @@ import { test, expect, type Page } from "@playwright/test";
 
 const PAGES = [
   { path: "/", heading: "Find your ground." },
-  { path: "/schedule", heading: "This week at the studio" },
+  { path: "/classes", heading: "This week at the studio" },
   { path: "/pricing", heading: "Simple pricing, no fine print" },
   { path: "/styles-of-yoga", heading: "Which class is actually for you" },
-  { path: "/private-sessions", heading: "One-to-one, built around you" },
+  { path: "/events/autumn-weekend-retreat", heading: "Autumn Weekend Retreat" },
 ];
 
 const BREAKPOINTS = [
@@ -62,14 +62,21 @@ test.describe("desktop navigation", () => {
   });
 });
 
-test.describe("home page animation", () => {
+test.describe("home page hero image", () => {
   for (const breakpoint of BREAKPOINTS) {
-    test(`renders the sun salutation illustration at ${breakpoint.name} width`, async ({ page }) => {
+    test(`renders the meditation silhouette at ${breakpoint.name} width`, async ({ page }) => {
       await page.setViewportSize({ width: breakpoint.width, height: breakpoint.height });
       await page.goto("/");
-      const layers = page.locator(".pose-layer svg");
-      await expect(layers.first()).toBeVisible();
-      expect(await layers.count()).toBeGreaterThanOrEqual(8);
+      await expect(page.getByRole("img", { name: /meditation pose/i })).toBeVisible();
     });
   }
+});
+
+test.describe("upcoming events", () => {
+  test("a tile on the home page links to its own event detail page", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("link", { name: "Autumn Weekend Retreat" }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "Autumn Weekend Retreat" })).toBeVisible();
+    await expect(page.getByText("What's included")).toBeVisible();
+  });
 });

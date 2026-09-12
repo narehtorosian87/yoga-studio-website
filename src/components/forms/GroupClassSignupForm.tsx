@@ -1,10 +1,38 @@
 import { useRef, useState, type FormEvent } from "react";
+import { GROUP_REGISTRATION_ENDPOINT } from "../../config";
 import { classSchedule, formatSessionLabel } from "../../data/schedule";
 import { Button } from "../ui/Button";
 import { SelectField, TextareaField, TextField } from "../ui/FormField";
 import { SuccessMessage } from "../ui/SuccessMessage";
 
 const initialValues = { name: "", email: "", classId: "", notes: "" };
+
+/**
+ * Fire-and-forget: records the registration in the studio's Google Sheet
+ * when an endpoint is configured. Apps Script Web Apps don't reply with
+ * usable CORS headers, so the response can't be read from the browser —
+ * this only confirms the request was sent, not that it succeeded, which
+ * is why the on-page success message never depends on it.
+ */
+function recordRegistration(values: typeof initialValues) {
+  if (!GROUP_REGISTRATION_ENDPOINT) {
+    return;
+  }
+  const session = classSchedule.find((candidate) => candidate.id === values.classId);
+  fetch(GROUP_REGISTRATION_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({
+      name: values.name,
+      email: values.email,
+      className: session ? formatSessionLabel(session) : values.classId,
+      notes: values.notes,
+    }),
+  }).catch(() => {
+    // Nothing to do: there's no backend to report the failure to either.
+  });
+}
 
 export function GroupClassSignupForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -20,6 +48,7 @@ export function GroupClassSignupForm() {
       return;
     }
 
+    recordRegistration(values);
     setIsSubmitted(true);
     setValues(initialValues);
   }

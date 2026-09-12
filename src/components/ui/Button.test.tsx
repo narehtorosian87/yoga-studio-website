@@ -48,4 +48,26 @@ describe("Button", () => {
     const link = screen.getByRole("link", { name: "View the schedule" });
     expect(link).toHaveAttribute("href", "/schedule");
   });
+
+  it("keeps its button styling when a `to` link also has a custom className", () => {
+    render(
+      <MemoryRouter>
+        <Button to="/schedule" className="w-full">
+          View the schedule
+        </Button>
+      </MemoryRouter>,
+    );
+    const link = screen.getByRole("link", { name: "View the schedule" });
+    expect(link).toHaveClass("bg-primary-700", "w-full");
+  });
+
+  it("keeps its button styling when an `href` link also has a custom className", () => {
+    render(
+      <Button href="mailto:hello@ekamyoga.studio" className="w-full">
+        Email us
+      </Button>,
+    );
+    const link = screen.getByRole("link", { name: "Email us" });
+    expect(link).toHaveClass("bg-primary-700", "w-full");
+  });
 });

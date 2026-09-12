@@ -35,7 +35,7 @@ export function PricingPage() {
           </div>
           <p className="mt-7 text-center text-sm text-sand-600">{pricingNote}</p>
           <div className="mt-8 text-center">
-            <Button to="/schedule">Reserve a class</Button>
+            <Button to="/classes">Reserve a class</Button>
           </div>
         </Container>
       </Section>
@@ -55,7 +55,7 @@ export function PricingPage() {
           </div>
           <p className="mt-7 text-center text-sm text-sand-600">{pricingNote}</p>
           <div className="mt-8 text-center">
-            <Button to="/private-sessions">Apply for a private session</Button>
+            <Button to="/classes#private-sessions">Apply for a private session</Button>
           </div>
         </Container>
       </Section>
